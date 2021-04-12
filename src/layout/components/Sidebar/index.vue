@@ -1,0 +1,41 @@
+<template>
+  <el-scrollbar wrap-class="scrollbar-wrapper">
+    <el-menu
+      :collapse="isCollapse"
+      :background-color="variables.mengBg"
+      :text-color="variables.menuText"
+      :unique-opened="false"
+      :active-text-color="variables.menuActiveText"
+      :collapse-transition="false"
+      mode="vertical"
+    >
+      <sidebar-item v-for="route in permissionRoutes" :key="route.path"
+        :item="route"
+        :base-path="route.path"></sidebar-item>
+    </el-menu>
+  </el-scrollbar>
+</template>
+
+<script>
+import { mapGetters } from "vuex";
+import variables from '@/styles/variables.scss';
+import SidebarItem from "./SidebarItem.vue";
+
+export default {
+  data() {
+    return {};
+  },
+  components: {
+    SidebarItem
+  },
+ computed: {
+   ...mapGetters(["sidebar", "permissionRoutes"]),
+   variables() {
+     return variables
+   },
+   isCollapse() {
+     return !this.sidebar.opened
+   }
+ }
+};
+</script>
