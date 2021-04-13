@@ -5,6 +5,7 @@
       class="hamburger-container"
       @toggle-click="toggleSideBar"
     />
+    <breadcrumb class="breadcrumb-container" />
     <div class="right-menu">
       <span>{{username}}</span>
       <el-dropdown
@@ -47,10 +48,12 @@
 <script>
 import { mapGetters } from "vuex";
 import Hamburger from "@/components/Hamburger.vue";
+import Breadcrumb from "@/components/Breadcrumb/index.vue";
 
 export default {
   components: {
     Hamburger,
+    Breadcrumb
   },
   computed: {
     ...mapGetters(["sidebar", "username"]),

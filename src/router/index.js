@@ -65,7 +65,7 @@ export const asyncRoutes = [
         path: "index",
         component: () => import("@/views/routeAuth/index.vue"),
         name: "Auth",
-        meta: { title: "权限测试页面", icon: "el-icon-user" },
+        meta: { title: "页面权限测试", icon: "el-icon-user" },
       },
     ],
   },
