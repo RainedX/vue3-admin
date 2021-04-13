@@ -44,8 +44,9 @@ service.interceptors.response.use(
               location.reload();
             });
           })
-          .catch(() => {});
+          .catch(() => {})
       }
+      return Promise.reject(new Error(res.message || 'Error'))
     } else {
       return res;
     }

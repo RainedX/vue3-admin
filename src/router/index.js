@@ -1,22 +1,26 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Layout from "@/layout/index.vue";
-const Login = () => import("@/components/Login.vue");
 
+const Login = () => import("@/components/Login.vue");
+const NotFound = () => import("@/components/NotFound.vue");
 /**
- * Note: 子菜单仅当路由的children.length >= 1时才出现
+ * Note: sub-menu only appear when route children.length >= 1
+ * Detail see: https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
  *
- * hidden: true                   设置为true时路由将显示在sidebar中(默认false)
- * alwaysShow: true               如果设置为true则总是显示在菜单根目录
- *                                如果不设置alwaysShow, 当路由有超过一个子路由时,
- *                                将会变为嵌套模式, 否则不会显示根菜单
- * redirect: noRedirect           如果设置noRedirect时，breadcrumb中点击将不会跳转
- * name:'router-name'             name用于<keep-alive> (必须设置!!!)
+ * hidden: true                   if set true, item will not show in the sidebar(default is false)
+ * alwaysShow: true               if set true, will always show the root menu
+ *                                if not set alwaysShow, when item has more than one children route,
+ *                                it will becomes nested mode, otherwise not show the root menu
+ * redirect: noRedirect           if set noRedirect will no redirect in the breadcrumb
+ * name:'router-name'             the name is used by <keep-alive> (must set!!!)
  * meta : {
-    roles: ['admin','editor']    页面可访问角色设置 
-    title: 'title'               sidebar和breadcrumb显示的标题 
-    icon: 'svg-name'/'el-icon-x' sidebar中显示的图标
-    breadcrumb: false            设置为false，将不会出现在面包屑中
-    activeMenu: '/example/list'  如果设置一个path, sidebar将会在高亮匹配项
+    roles: ['admin','editor']    control the page roles (you can set multiple roles)
+    title: 'title'               the name show in sidebar and breadcrumb (recommend set)
+    icon: 'svg-name'/'el-icon-x' the icon show in the sidebar
+    noCache: true                if set true, the page will no be cached(default is false)
+    affix: true                  if set true, the tag will affix in the tags-view
+    breadcrumb: false            if set false, the item will hidden in breadcrumb(default is true)
+    activeMenu: '/example/list'  if set path, the sidebar will highlight the path you set
   }
  */
 
@@ -39,7 +43,58 @@ export const constantRoutes = [
   },
 ];
 
-export const asyncRoutes = [];
+export const asyncRoutes = [
+  {
+    path: "/btnauth",
+    component: Layout,
+    children: [
+      {
+        path: "index",
+        component: () => import("@/views/contentAuth/index.vue"),
+        name: "BtnAuth",
+        meta: { title: "按钮权限测试", icon: "el-icon-user" },
+      },
+    ],
+  },
+  {
+    path: "/auth",
+    component: Layout,
+    meta: { roles: ['admin'] }, // 权限必须在这边限制住
+    children: [
+      {
+        path: "index",
+        component: () => import("@/views/routeAuth/index.vue"),
+        name: "Auth",
+        meta: { title: "权限测试页面", icon: "el-icon-user" },
+      },
+    ],
+  },
+  {
+    path: "/charts",
+    component: Layout,
+    redirect: "noRedirect",
+    name: "Charts",
+    alwaysShow: true,
+    meta: {
+      title: "图表",
+      icon: "el-icon-pie-chart",
+    },
+    children: [
+      {
+        path: "line",
+        component: () => import("@/views/charts/index.vue"),
+        name: "LineChart",
+        meta: { title: "折线图", noCache: true },
+      },
+    ],
+  },
+  {
+    path: "/:pathMatch(.*)*",
+    name: "NotFound",
+    component: NotFound,
+    hidden: true,
+  },
+];
 
 const router = createRouter({
   history: createWebHistory(),

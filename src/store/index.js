@@ -10,8 +10,10 @@ export default createStore({
     permission,
   },
   getters: {
+    username: (state) => state.user.username,
     sidebar: (state) => state.app.sidebar,
     roles: (state) => state.user.roles,
+    settings: state => state.app.settings,
     permissionRoutes: (state) => state.permission.routes,
   },
 });

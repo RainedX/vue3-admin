@@ -3,7 +3,7 @@ import { getToken, setToken, removeToken } from "@/utils/auth";
 
 const state = {
   token: getToken(),
-  name: "",
+  username: "",
   avatar: "",
   introduction: "",
   roles: [],
@@ -16,8 +16,8 @@ const mutations = {
   SET_INTRODUCTION: (state, introduction) => {
     state.introduction = introduction;
   },
-  SET_NAME: (state, name) => {
-    state.name = name;
+  SET_NAME: (state, username) => {
+    state.username = username;
   },
   SET_AVATAR: (state, avatar) => {
     state.avatar = avatar;
@@ -72,6 +72,10 @@ const actions = {
           reject(error);
         });
     });
+  },
+  logout({ dispatch }) {
+    dispatch("resetToken");
+    dispatch("permission/resetRoutes", null, { root: true });
   },
   // 清除token
   resetToken({ commit }) {

@@ -50,6 +50,9 @@ import {
   ElTabs,
   ElTag,
   ElTooltip,
+  ElDropdown,
+  ElDropdownItem,
+  ElDropdownMenu
 } from "element-plus";
 
 export const components = [
@@ -104,4 +107,7 @@ export const components = [
   ElTabs,
   ElTag,
   ElTooltip,
+  ElDropdown,
+  ElDropdownItem,
+  ElDropdownMenu
 ];

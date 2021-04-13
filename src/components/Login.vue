@@ -44,7 +44,10 @@
           auto-complete="on"
           @keyup.enter="handleLogin"
         />
-        <span class="show-pwd" @click="showPwd">
+        <span
+          class="show-pwd"
+          @click="showPwd"
+        >
           <!-- <svg-icon
             :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'"
           /> -->
@@ -64,11 +67,10 @@
         type="primary"
         style="width:100%;margin-bottom:30px;"
         @click.prevent="handleLogin"
-        >Login</el-button
-      >
+      >Login</el-button>
 
       <div class="tips">
-        <span style="margin-right:20px;">username: admin</span>
+        <span style="margin-right:20px;">username: admin / user</span>
         <span> password: any</span>
       </div>
     </el-form>
@@ -79,7 +81,7 @@
 import { reactive, ref, toRefs, nextTick, watchEffect, unref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useStore } from "vuex";
-import { ElMessage } from 'element-plus'
+import { ElMessage } from "element-plus";
 
 export default {
   name: "Login",
@@ -92,7 +94,7 @@ export default {
     const formState = reactive({
       loginFormModel: {
         username: "admin",
-        password: "111111",
+        password: "123456",
       },
       loginRules: {
         username: [
@@ -154,7 +156,7 @@ function useLogin(form, model, redirect) {
   // 提供给外界登录的方法
   const login = () => {
     // 校验
-    unref(form).validate(valid => {
+    unref(form).validate((valid) => {
       if (valid) {
         loading.value = true;
         // 发送登录请求
@@ -163,9 +165,9 @@ function useLogin(form, model, redirect) {
           .then(() => {
             // 登录成功，用户跳转
             ElMessage.success({
-            message: '登录成功',
-            type: 'success'
-          });
+              message: "登录成功",
+              type: "success",
+            });
             router.push({ path: unref(redirect) || "/" });
             loading.value = false;
           })
